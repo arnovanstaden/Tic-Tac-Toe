@@ -1,0 +1,11 @@
+.board {
+    display: grid;
+    grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+    gap: 1rem;
+
+    &--result {
+        background-color: white;
+        border-radius: 1rem;
+        grid-area: 1/4/1/4;
+    }
+}

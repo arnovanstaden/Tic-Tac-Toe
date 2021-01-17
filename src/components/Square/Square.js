@@ -1,7 +1,7 @@
 import React from "react";
 
 // Styles
-import "../styles/square.scss";
+import "./square.scss";
 
 export default function Square(props) {
     return (

@@ -1,13 +1,13 @@
 import React from "react";
 
 // Components
-import Board from "./Board"
+import Board from "../Board/Board";
 
 // Styles
-import "../styles/game.scss";
+import "./game.scss";
 
 // Helpers
-import * as Gameplay from "../helpers/gameplay"
+import * as Gameplay from "../../helpers/gameplay";
 
 class Game extends React.Component {
     constructor(props) {
@@ -19,16 +19,16 @@ class Game extends React.Component {
             currentScore: {
                 user: 0,
                 computer: 0
-            }
+            },
+            activeGame: true,
+            lastWinner: undefined
         }
     }
 
-
     // Lifecycle Methods
     componentDidMount() {
-        // Load previous Progress
-        let progress = Gameplay.loadPreviousProgress();
-        this.setState(progress);
+
+        this.handleLoad()
 
         if (this.props.playerMarks.computer === "X" && this.state.xIsNext) {
             this.computersTurn()
@@ -54,7 +54,6 @@ class Game extends React.Component {
                 totalMoves: state.totalMoves + 1
             }
         }, () => {
-            Gameplay.saveGameProgress(this.state);
             this.checkRoundEnd(this.state);
 
             // ComputerTurn
@@ -71,7 +70,8 @@ class Game extends React.Component {
         this.setState({
             squares: Array(9).fill(null),
             xIsNext: true,
-            totalMoves: 0
+            totalMoves: 0,
+            activeGame: true
         }, () => {
             if (this.props.playerMarks.computer === "X" && this.state.xIsNext) {
                 this.computersTurn()
@@ -81,9 +81,18 @@ class Game extends React.Component {
     }
 
     handleExit = () => {
-        Gameplay.saveHighScore(this.state.currentScore.user)
-        Gameplay.resetGameProgress();
-        this.props.handleGameState();
+        const squares = [...this.state.squares];
+        if (squares.includes("X") || squares.includes("O")) {
+            const closeOptions = (
+                <div className="container container__options">
+                    <button className="button--red" onClick={() => this.exitGame()}>Exit</button>
+                    <button className="button--blue" onClick={() => this.props.hideModal()}>Continue</button>
+                </div>
+            )
+            this.props.showModal("Exit Game", "Are you sure you want to exit game. Your current streak will be lost.", closeOptions)
+        } else {
+            this.exitGame()
+        }
     }
 
     handleLoad = () => {
@@ -100,13 +109,21 @@ class Game extends React.Component {
         if (winner) {
             newScore = Gameplay.updateScore(state, this.props.playerMarks, winner);
             this.setState({
-                currentScore: newScore
+                currentScore: newScore,
+                activeGame: false,
+                lastWinner: winner
+            }, () => {
+                Gameplay.saveGameProgress(this.state);
             });
-            console.log("Winner: " + winner);
-            console.log("Total Moves: " + this.state.totalMoves)
         } else if (!winner && this.state.totalMoves === 9) {
-            console.log("draw")
+            this.setState({
+                activeGame: false,
+                lastWinner: winner
+            }, () => {
+                Gameplay.saveGameProgress(this.state);
+            });
         }
+        Gameplay.saveGameProgress(this.state);
     }
 
     computersTurn = () => {
@@ -121,6 +138,13 @@ class Game extends React.Component {
         }, 400)
     }
 
+    exitGame = () => {
+        Gameplay.saveHighScore(this.state.currentScore.user)
+        Gameplay.resetGameProgress();
+        this.props.handleGameState();
+        this.props.hideModal()
+    }
+
     render() {
         return (
             <div className="game">
@@ -129,12 +153,14 @@ class Game extends React.Component {
                 <div className="game__board">
                     <Board
                         squares={this.state.squares}
-                        onClick={(i) => this.handleSquareClick(i)} />
+                        handleSquareClick={this.handleSquareClick}
+                        handleNewGame={this.handleNewGame}
+                        winner={this.state.activeGame ? undefined : this.state.lastWinner} />
                 </div>
                 <div className="game__options">
-                    <button onClick={this.handleExit}>Exit Game</button>
-                    {/* <button onClick={this.handleLoad}>load</button> */}
-                    <button onClick={this.handleNewGame}>Play Again</button>
+                    <div className="container container__options">
+                        <button className="button--red" onClick={this.handleExit}>Exit Game</button>
+                    </div>
                 </div>
             </div>
         );

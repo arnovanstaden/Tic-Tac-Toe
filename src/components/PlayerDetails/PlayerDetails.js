@@ -1,7 +1,7 @@
 import React from "react";
 
 // Styles
-import "../styles/player-details.scss";
+import "../player-details.scss";
 
 export default function Square(props) {
     return (
