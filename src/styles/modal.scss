@@ -1,0 +1,9 @@
+@import "../index.scss";
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: $medium-grey;
+    z-index: 100;
+}
