@@ -2,7 +2,31 @@
     display: flex;
     flex-direction: column;
 
-    .game__options {
+    &__options {
         margin-top: 20px;
     }
+
+    &__players {
+        display: flex;
+        justify-content: space-between;
+
+        div {
+            display: flex;
+            align-items: center;
+
+            p {
+                margin-left: 0.5rem;
+                font-weight: 500;
+            }
+        }
+
+        div:last-child {
+            p {
+                margin-left: 0;
+                margin-right: 0.5rem;
+            }
+        }
+    }
+
+
 }

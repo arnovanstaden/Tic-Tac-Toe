@@ -2,12 +2,12 @@
 $font: "Quicksand";
 $light-grey: #eeeded;
 $medium-grey: #333333;
-$blue-gradient: linear-gradient(120deg, #4ca9df, #292E91);
-$red-gradient: linear-gradient(120deg, #e21c34, #500b28);
+$blue: #54a1c0;
+$green: #46ad42;
 
 body,
 html {
-    min-width: 100vh;
+    min-width: 100vw;
     min-height: 100vh;
     overflow-x: hidden;
     font-family: $font !important;
@@ -28,13 +28,18 @@ button {
     outline: none;
 
     &.button--blue {
-        background: $blue-gradient;
+        background-color: $blue;
         color: white;
     }
 
-    &.button--red {
-        background: $red-gradient;
+    &.button--green {
+        background-color: $blue;
         color: white;
+    }
+
+    &.button--grey {
+        background-color: transparent;
+        border: 1px solid $medium-grey;
     }
 }
 
@@ -45,6 +50,7 @@ button {
     &__options {
         justify-content: center;
         column-gap: 1rem;
+        margin-top: 1rem;
     }
 
     &__column {

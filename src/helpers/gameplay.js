@@ -1,3 +1,16 @@
+// Game Settings
+export const saveGameSettings = (settings) => {
+    localStorage.setItem("gameSettings", JSON.stringify(settings));
+}
+
+export const loadGameSettings = () => {
+    return JSON.parse(localStorage.getItem("gameSettings"));
+}
+
+export const resetGameSettings = () => {
+    localStorage.removeItem("gameSettings");
+}
+
 // Progress
 export const saveGameProgress = (progress) => {
     localStorage.setItem("gameProgress", JSON.stringify(progress));
@@ -11,16 +24,7 @@ export const resetGameProgress = () => {
     localStorage.removeItem("gameProgress");
 }
 
-
 // Game State
-
-export const saveGameState = (state) => {
-    localStorage.setItem("activeGame", JSON.stringify(state));
-}
-
-export const getGameState = () => {
-    return JSON.parse(localStorage.getItem("activeGame"))
-}
 
 // Scoring
 export const calculateWinner = (squares) => {

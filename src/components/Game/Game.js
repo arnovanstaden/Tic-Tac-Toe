@@ -2,9 +2,13 @@ import React from "react";
 
 // Components
 import Board from "../Board/Board";
+import O from "../Marks/O";
+import X from "../Marks/X";
 
 // Styles
 import "./game.scss";
+
+// Images
 
 // Helpers
 import * as Gameplay from "../../helpers/gameplay";
@@ -54,7 +58,10 @@ class Game extends React.Component {
                 totalMoves: state.totalMoves + 1
             }
         }, () => {
-            this.checkRoundEnd(this.state);
+
+            setTimeout(() => {
+                this.checkRoundEnd(this.state);
+            }, 500)
 
             // ComputerTurn
             if (!userIsNext && this.state.totalMoves < 9) {
@@ -62,7 +69,6 @@ class Game extends React.Component {
             }
         });
         return true
-
     }
 
     handleNewGame = () => {
@@ -85,11 +91,11 @@ class Game extends React.Component {
         if (squares.includes("X") || squares.includes("O")) {
             const closeOptions = (
                 <div className="container container__options">
-                    <button className="button--red" onClick={() => this.exitGame()}>Exit</button>
+                    <button className="button--grey" onClick={() => this.exitGame()}>Exit</button>
                     <button className="button--blue" onClick={() => this.props.hideModal()}>Continue</button>
                 </div>
             )
-            this.props.showModal("Exit Game", "Are you sure you want to exit game. Your current streak will be lost.", closeOptions)
+            this.props.showModal("Exit Game", "Are you sure you want to exit game. \n Your current streak will be lost.", closeOptions)
         } else {
             this.exitGame()
         }
@@ -145,11 +151,27 @@ class Game extends React.Component {
         this.props.hideModal()
     }
 
+    // Components
+    PlayerMarks = () => {
+        return (
+            <div className="game__players">
+                <div>
+                    <X size={20} />
+                    <p>{this.props.playerMarks.user === "X" ? this.props.username : `Computer`}</p>
+                </div>
+                <div>
+                    <p>{this.props.playerMarks.user === "O" ? this.props.username : `Computer`}</p>
+                    <O size={20} />
+                </div>
+            </div>
+        )
+    }
+
     render() {
+        console.log(this.props.playerMarks)
         return (
             <div className="game">
-                <div className="game__players">
-                </div>
+                <this.PlayerMarks />
                 <div className="game__board">
                     <Board
                         squares={this.state.squares}
@@ -159,7 +181,7 @@ class Game extends React.Component {
                 </div>
                 <div className="game__options">
                     <div className="container container__options">
-                        <button className="button--red" onClick={this.handleExit}>Exit Game</button>
+                        <button className="button--grey" onClick={this.handleExit}>Exit Game</button>
                     </div>
                 </div>
             </div>

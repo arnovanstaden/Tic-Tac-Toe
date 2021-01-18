@@ -4,6 +4,8 @@ import React from "react";
 import Home from "../Home/Home";
 import Game from "../Game/Game";
 import Modal from "../Modal/Modal";
+import O from "../Marks/O";
+import X from "../Marks/X";
 
 // Styles & Fonts
 import "./app.scss";
@@ -16,18 +18,11 @@ class App extends React.Component {
         super(props);
         this.state = {
             username: null,
-            // playerMarks: {
-            //     user: null,
-            //     computer: null
-            // },
             playerMarks: {
                 user: null,
                 computer: null
             },
-            highScore: {
-                wins: null
-            },
-            activeGame: Gameplay.getGameState(),
+            activeGame: Gameplay.loadGameSettings() === null ? false : Gameplay.loadGameSettings().activeGame,
             modal: {
                 show: false,
                 content: null
@@ -35,47 +30,82 @@ class App extends React.Component {
         }
     }
 
-    // Handlers
+    // Lifecycle Methods
 
     componentDidMount = () => {
-        if (!this.state.username) {
+        this.handleLoad()
+    }
+
+    // Handlers
+
+
+    handleLoad = () => {
+        const settings = Gameplay.loadGameSettings();
+        console.log(settings)
+        if (settings && settings.username) {
+            this.setState(settings)
+        } else {
             let options = (
                 <div className="container container__column">
-                    <input />
-                    <button className="button--blue" onClick={this.saveUsername}>Save Username</button>
+                    <input name="name" id="username" type="text" onChange={this.handleChange.bind(this)} />
+                    <button className="button--blue" onClick={() => this.hideModal()}>Save Username</button>
                 </div >
             )
-            this.showModal("Set Username", "Enter your Username", options)
+            this.showModal("Choose Username", "Enter your Username", options)
         }
     }
 
-    // Helpers
-    saveUsername = () => {
-        // this.setState({
-        //     username: 
-        // })
+    handleChange = (event) => {
+        this.setState({
+            username: event.target.value
+        }, () => {
+            Gameplay.saveGameSettings(this.state)
+        });
     }
 
     handleGameState = () => {
 
         // Change Active Game State
         let currentState = this.state.activeGame
-        Gameplay.saveGameState(!currentState)
         this.setState({
             activeGame: !currentState,
+        }, () => {
+            Gameplay.saveGameSettings(this.state)
         })
 
         // Get Mark Choice
         if (!currentState) {
-            let userMark = prompt("Will you play with 'X' or 'O'?", "X");
-            this.setState({
-                playerMarks: {
-                    user: userMark === "X" ? "X" : "O",
-                    computer: userMark === "X" ? "O" : "X",
-                }
-            })
+            this.getPlayerMarks()
         }
     }
+
+    // Player Marks
+    getPlayerMarks = () => {
+        const options = (
+            <div className="container player-marks">
+                <button onClick={() => this.setPlayerMarks("X")}>
+                    <X />
+                </button>
+                <button onClick={() => this.setPlayerMarks("O")}>
+                    <O />
+                </button>
+            </div >
+        );
+        this.showModal("Player Marks", "Do you want to be X's or O's?", options)
+
+    }
+
+    setPlayerMarks = (userMark) => {
+        this.setState({
+            playerMarks: {
+                user: userMark === "X" ? "X" : "O",
+                computer: userMark === "X" ? "O" : "X",
+            }
+        }, () => {
+            Gameplay.saveGameSettings(this.state)
+        })
+    }
+
 
     // Modal
     showModal = (heading, text, options) => {
@@ -107,7 +137,11 @@ class App extends React.Component {
                         handleGameState={this.handleGameState}
                         showModal={this.showModal}
                         hideModal={this.hideModal} />
-                    : <Home handleGameState={this.handleGameState} />}
+                    : <Home
+                        handleGameState={this.handleGameState}
+                        username={this.state.username}
+                        highScore={Gameplay.getHighScore()}
+                    />}
                 {this.state.modal.show
                     ? <Modal>
                         <h3>{this.state.modal.content.heading}</h3>

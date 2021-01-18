@@ -4,4 +4,20 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+
+    .username {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        background-color: white;
+        margin-bottom: 1rem;
+
+        span {
+            display: block;
+            background: $light-grey;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+        }
+    }
 }
