@@ -23,7 +23,6 @@ const Board = (props) => {
     )
 
     const WinnerMark = () => {
-        let mark;
         switch (props.winner) {
             case "X":
                 return <X size={50} />

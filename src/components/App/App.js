@@ -6,7 +6,6 @@ import Game from "../Game/Game";
 import Modal from "../Modal/Modal";
 import O from "../Marks/O";
 import X from "../Marks/X";
-import Transition from "../Transition/Transition"
 
 // Styles & Fonts
 import "./app.scss";
@@ -133,7 +132,7 @@ class App extends React.Component {
     render() {
         return (
             <main className="app" >
-                <h1 className="app__heading">Tic Tac Toe</h1>
+                <h1 className="app__heading">Tickity Tackity</h1>
 
                 {this.state.activeGame
                     ?
