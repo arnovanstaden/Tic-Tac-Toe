@@ -4,8 +4,8 @@ import O_img from "../../assets/images/O.svg";
 
 const O = (props) => {
     return (
-        <div className="O">
-            <img width={20} height={20} src={O_img} alt="" />
+        <div>
+            <img width={props.size ? props.size : 20} height={props.size ? props.size : 20} src={O_img} alt="" />
         </div>
     )
 }

@@ -24,7 +24,7 @@ class Game extends React.Component {
                 user: 0,
                 computer: 0
             },
-            activeGame: true,
+            gameInProgress: true,
             lastWinner: undefined
         }
     }
@@ -77,8 +77,10 @@ class Game extends React.Component {
             squares: Array(9).fill(null),
             xIsNext: true,
             totalMoves: 0,
-            activeGame: true
+            gameInProgress: true,
+            lastWinner: undefined
         }, () => {
+            Gameplay.saveGameProgress(this.state);
             if (this.props.playerMarks.computer === "X" && this.state.xIsNext) {
                 this.computersTurn()
             }
@@ -116,14 +118,14 @@ class Game extends React.Component {
             newScore = Gameplay.updateScore(state, this.props.playerMarks, winner);
             this.setState({
                 currentScore: newScore,
-                activeGame: false,
+                gameInProgress: false,
                 lastWinner: winner
             }, () => {
                 Gameplay.saveGameProgress(this.state);
             });
         } else if (!winner && this.state.totalMoves === 9) {
             this.setState({
-                activeGame: false,
+                gameInProgress: false,
                 lastWinner: winner
             }, () => {
                 Gameplay.saveGameProgress(this.state);
@@ -154,12 +156,14 @@ class Game extends React.Component {
     // Components
     PlayerMarks = () => {
         return (
-            <div className="game__players">
-                <div>
+            <div className={`game__players ${this.state.gameInProgress ? "" : "inactive"}`}>
+                <div className={`game__players__mark ${this.state.xIsNext ? `` : `inactive`} ${this.state.gameInProgress ? `` : `inactive`}`}>
                     <X size={20} />
                     <p>{this.props.playerMarks.user === "X" ? this.props.username : `Computer`}</p>
+                    <span>{this.props.playerMarks.user === "X" ? this.state.currentScore.user : this.state.currentScore.computer}</span>
                 </div>
-                <div>
+                <div className={`game__players__mark ${this.state.xIsNext ? `inactive` : ``} ${this.state.gameInProgress ? `` : `inactive`}`}>
+                    <span>{this.props.playerMarks.user === "O" ? this.state.currentScore.user : this.state.currentScore.computer}</span>
                     <p>{this.props.playerMarks.user === "O" ? this.props.username : `Computer`}</p>
                     <O size={20} />
                 </div>
@@ -167,17 +171,20 @@ class Game extends React.Component {
         )
     }
 
+    Outcome = () => {
+
+    }
+
     render() {
-        console.log(this.props.playerMarks)
         return (
             <div className="game">
                 <this.PlayerMarks />
                 <div className="game__board">
                     <Board
-                        squares={this.state.squares}
+                        {...this.state}
                         handleSquareClick={this.handleSquareClick}
                         handleNewGame={this.handleNewGame}
-                        winner={this.state.activeGame ? undefined : this.state.lastWinner} />
+                        winner={this.state.gameInProgress ? undefined : this.state.lastWinner} />
                 </div>
                 <div className="game__options">
                     <div className="container container__options">

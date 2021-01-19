@@ -6,6 +6,7 @@ import Game from "../Game/Game";
 import Modal from "../Modal/Modal";
 import O from "../Marks/O";
 import X from "../Marks/X";
+import Transition from "../Transition/Transition"
 
 // Styles & Fonts
 import "./app.scss";
@@ -41,9 +42,14 @@ class App extends React.Component {
 
     handleLoad = () => {
         const settings = Gameplay.loadGameSettings();
-        console.log(settings)
         if (settings && settings.username) {
-            this.setState(settings)
+            this.setState({
+                ...settings,
+                modal: {
+                    show: false,
+                    content: null
+                }
+            })
         } else {
             let options = (
                 <div className="container container__column">
@@ -64,7 +70,6 @@ class App extends React.Component {
     }
 
     handleGameState = () => {
-
         // Change Active Game State
         let currentState = this.state.activeGame
         this.setState({
@@ -72,17 +77,12 @@ class App extends React.Component {
         }, () => {
             Gameplay.saveGameSettings(this.state)
         })
-
-        // Get Mark Choice
-        if (!currentState) {
-            this.getPlayerMarks()
-        }
     }
 
     // Player Marks
     getPlayerMarks = () => {
         const options = (
-            <div className="container player-marks">
+            <div className="container player-marks container__options">
                 <button onClick={() => this.setPlayerMarks("X")}>
                     <X />
                 </button>
@@ -91,18 +91,19 @@ class App extends React.Component {
                 </button>
             </div >
         );
-        this.showModal("Player Marks", "Do you want to be X's or O's?", options)
-
+        this.showModal("Player Marks", `${this.state.username}, do you want to be X's or O's?`, options)
     }
 
     setPlayerMarks = (userMark) => {
+        this.hideModal();
         this.setState({
             playerMarks: {
                 user: userMark === "X" ? "X" : "O",
                 computer: userMark === "X" ? "O" : "X",
             }
         }, () => {
-            Gameplay.saveGameSettings(this.state)
+            Gameplay.saveGameSettings(this.state);
+            this.handleGameState()
         })
     }
 
@@ -132,18 +133,25 @@ class App extends React.Component {
     render() {
         return (
             <main className="app" >
+                <h1 className="app__heading">Tic Tac Toe</h1>
+
                 {this.state.activeGame
-                    ? <Game {...this.state}
+                    ?
+                    <Game {...this.state}
                         handleGameState={this.handleGameState}
                         showModal={this.showModal}
                         hideModal={this.hideModal} />
-                    : <Home
-                        handleGameState={this.handleGameState}
+
+                    :
+                    <Home
+                        startGame={this.getPlayerMarks}
                         username={this.state.username}
                         highScore={Gameplay.getHighScore()}
-                    />}
+                    />
+                }
                 {this.state.modal.show
-                    ? <Modal>
+                    ?
+                    <Modal>
                         <h3>{this.state.modal.content.heading}</h3>
                         <p>{this.state.modal.content.text}</p>
                         {this.state.modal.content.options}

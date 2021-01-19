@@ -1,3 +1,5 @@
+@import "../../index.scss";
+
 .game {
     display: flex;
     flex-direction: column;
@@ -9,24 +11,50 @@
     &__players {
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
 
-        div {
+        .game__players__mark {
             display: flex;
-            align-items: center;
+            transition: 0.25s ease-in-out;
 
             p {
+                margin: 0;
                 margin-left: 0.5rem;
                 font-weight: 500;
+                vertical-align: middle;
+            }
+
+            span {
+                background-color: white;
+                border-radius: 0.5rem;
+                font-size: 0.9rem;
+                padding: 0.25rem 0.5rem;
+                margin-left: 0.5rem;
+                font-weight: 500;
+                color: $medium-grey;
+            }
+
+            &.inactive {
+                opacity: 0.5;
             }
         }
 
-        div:last-child {
+        .game__players__mark:last-child {
             p {
                 margin-left: 0;
                 margin-right: 0.5rem;
             }
+
+            span {
+                margin-left: 0;
+                margin-right: 0.5rem;
+            }
+        }
+
+        &.inactive {
+            opacity: 0.5;
         }
     }
-
 
 }

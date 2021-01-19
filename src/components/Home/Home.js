@@ -6,12 +6,11 @@ import "./home.scss";
 export default function Square(props) {
     return (
         <div className="home">
-            <h1>Tic Tac Toe</h1>
             <div className="username">
                 <p>{props.username}</p>
-                <span>{props.highScore}</span>
+                <span>{props.highScore ? props.highScore : 0}</span>
             </div>
-            <button className="button--blue" onClick={props.handleGameState}>Start Game</button>
+            <button className="button--blue" onClick={props.startGame}>Start Game</button>
         </div>
     );
 }

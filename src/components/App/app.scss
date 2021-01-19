@@ -7,6 +7,9 @@
     justify-content: center;
     align-items: center;
     background-color: $light-grey;
+    flex-direction: column;
 
-    .player-marks {}
+    &__heading {
+        margin-bottom: 2rem;
+    }
 }
