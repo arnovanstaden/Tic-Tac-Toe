@@ -6,6 +6,8 @@ import Game from "../Game/Game";
 import Modal from "../Modal/Modal";
 import O from "../Marks/O";
 import X from "../Marks/X";
+import Background from "../Background/Background";
+import Logo from "../../assets/images/Logo.svg";
 
 // Styles & Fonts
 import "./app.scss";
@@ -132,7 +134,11 @@ class App extends React.Component {
     render() {
         return (
             <main className="app" >
-                <h1 className="app__heading">Tickity Tackity</h1>
+                <Background />
+                <div className="app__heading">
+                    <img src={Logo} alt="Tickity Tackity Logo" />
+                    <h1>Tickity Tackity</h1>
+                </div>
 
                 {this.state.activeGame
                     ?

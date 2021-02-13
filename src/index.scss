@@ -5,14 +5,14 @@ $medium-grey: #333333;
 $blue: #54a1c0;
 $green: #46ad42;
 
-body,
-html {
+body {
     min-width: 100vw;
     min-height: 100vh;
     overflow-x: hidden;
     font-family: $font !important;
     margin: 0;
     padding: 0;
+    background-color: $light-grey;
 }
 
 button {

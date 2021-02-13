@@ -8,7 +8,10 @@ export default function Square(props) {
         <div className="home">
             <div className="username">
                 <p>{props.username}</p>
-                <span>{props.highScore ? props.highScore : 0}</span>
+                <div className="high-score">
+                    <p>High Score</p>
+                    <span>{props.highScore ? props.highScore : 0}</span>
+                </div>
             </div>
             <button className="button--blue" onClick={props.startGame}>Start Game</button>
         </div>

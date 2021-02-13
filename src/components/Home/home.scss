@@ -3,7 +3,9 @@
 .home {
     display: flex;
     justify-content: center;
+    align-items: center;
     flex-direction: column;
+    width: 100%;
 
     .username {
         display: flex;
@@ -11,13 +13,33 @@
         align-items: center;
         padding: 0.5rem 1rem;
         background-color: white;
-        margin-bottom: 1rem;
+        margin-bottom: 2rem;
+        width: 60%;
 
-        span {
-            display: block;
-            background: $light-grey;
-            border-radius: 0.5rem;
-            padding: 0.5rem;
+        >p {
+            font-weight: 600;
+            font-size: 1.1rem;
         }
+
+        .high-score {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+            >p {
+                margin: 0;
+                font-size: 0.8rem;
+                margin-bottom: 0.25rem;
+            }
+
+            span {
+                display: block;
+                font-weight: 600;
+                font-size: 1.1rem;
+            }
+
+        }
+
     }
 }

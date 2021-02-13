@@ -93,8 +93,8 @@ class Game extends React.Component {
         if (squares.includes("X") || squares.includes("O")) {
             const closeOptions = (
                 <div className="container container__options">
-                    <button className="button--grey" onClick={() => this.exitGame()}>Exit</button>
-                    <button className="button--blue" onClick={() => this.props.hideModal()}>Continue</button>
+                    <button className="button--blue" onClick={() => this.exitGame()}>Exit</button>
+                    <button className="button--grey" onClick={() => this.props.hideModal()}>Continue</button>
                 </div>
             )
             this.props.showModal("Exit Game", "Are you sure you want to exit game. \n Your current streak will be lost.", closeOptions)

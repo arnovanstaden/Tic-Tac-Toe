@@ -22,7 +22,6 @@
             display: grid;
             grid-template: repeat(3, 1fr) / repeat(3, 1fr);
             gap: 1rem;
-            background-color: $light-grey;
         }
 
         &__back {
