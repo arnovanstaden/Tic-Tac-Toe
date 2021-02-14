@@ -136,8 +136,9 @@ class App extends React.Component {
             <main className="app" >
                 <Background />
                 <div className="app__heading">
+                    <h1>Tickity</h1>
                     <img src={Logo} alt="Tickity Tackity Logo" />
-                    <h1>Tickity Tackity</h1>
+                    <h1> Tackity</h1>
                 </div>
 
                 {this.state.activeGame

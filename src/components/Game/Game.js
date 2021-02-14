@@ -31,12 +31,12 @@ class Game extends React.Component {
 
     // Lifecycle Methods
     componentDidMount() {
-
-        this.handleLoad()
+        this.handleLoad();
 
         if (this.props.playerMarks.computer === "X" && this.state.xIsNext) {
             this.computersTurn()
         }
+        console.log(this.state)
     }
 
     // Handlers
@@ -108,7 +108,6 @@ class Game extends React.Component {
         this.setState(pastProgress);
     }
 
-
     // Helpers
 
     checkRoundEnd = (state) => {
@@ -131,7 +130,6 @@ class Game extends React.Component {
                 Gameplay.saveGameProgress(this.state);
             });
         }
-        Gameplay.saveGameProgress(this.state);
     }
 
     computersTurn = () => {
@@ -143,7 +141,7 @@ class Game extends React.Component {
                 choice = Math.floor(Math.random() * 9);
                 moveSuccess = this.handleSquareClick(choice, true);
             }
-        }, 400)
+        }, 500)
     }
 
     exitGame = () => {
@@ -154,6 +152,7 @@ class Game extends React.Component {
     }
 
     // Components
+
     PlayerMarks = () => {
         return (
             <div className={`game__players ${this.state.gameInProgress ? "" : "inactive"}`}>
@@ -169,10 +168,6 @@ class Game extends React.Component {
                 </div>
             </div>
         )
-    }
-
-    Outcome = () => {
-
     }
 
     render() {

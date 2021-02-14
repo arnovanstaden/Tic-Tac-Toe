@@ -6,9 +6,9 @@ $blue: #54a1c0;
 $green: #46ad42;
 
 body {
-    min-width: 100vw;
-    min-height: 100vh;
-    overflow-x: hidden;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
     font-family: $font !important;
     margin: 0;
     padding: 0;
@@ -38,7 +38,7 @@ button {
     }
 
     &.button--grey {
-        background-color: transparent;
+        background-color: $light-grey;
         border: 1px solid $medium-grey;
     }
 }
