@@ -55,11 +55,12 @@ export const updateScore = (state, playerMarks, winner) => {
         newScore.computer++
     }
     const newState = { ...state, currentScore: newScore }
-    saveGameProgress(newState)
+    saveGameProgress(newState);
     return newState.currentScore
 }
 
 export const saveHighScore = (userScore) => {
+    console.log("Saving " + userScore)
     let currentScore = JSON.parse(localStorage.getItem("highScore"));
 
     if (currentScore === undefined) {

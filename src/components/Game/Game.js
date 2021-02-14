@@ -36,7 +36,6 @@ class Game extends React.Component {
         if (this.props.playerMarks.computer === "X" && this.state.xIsNext) {
             this.computersTurn()
         }
-        console.log(this.state)
     }
 
     // Handlers
@@ -85,7 +84,8 @@ class Game extends React.Component {
                 this.computersTurn()
             }
         });
-        console.clear()
+        console.clear();
+        Gameplay.saveHighScore(this.state.currentScore.user)
     }
 
     handleExit = () => {
@@ -145,7 +145,6 @@ class Game extends React.Component {
     }
 
     exitGame = () => {
-        Gameplay.saveHighScore(this.state.currentScore.user)
         Gameplay.resetGameProgress();
         this.props.handleGameState();
         this.props.hideModal()
