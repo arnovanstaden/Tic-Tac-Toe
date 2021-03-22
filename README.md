@@ -4,24 +4,24 @@ A straightforward Tic-Tac-Toe PWA against the computer with a sleek UI.
 ## Link
 You can visit the site [here](https://tickity-tackity.netlify.app/).
 
-### Features
-Progressive Web App Functionality
-User High Score Persistance
-Play against AI
+## Features
+* Progressive Web App Functionality
+* User High Score Persistance
+* Play against AI
 
-### Additional Information
+## Additional Information
 
-#### Type
+### Type
 Front End PWA
 
-#### Tech Stack
+### Tech Stack
 * React
 * SASS
 
-#### Industry
+### Industry
 Games
 
-#### Date
+### Date
 January 2021
 
 
